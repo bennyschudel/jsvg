@@ -1,13 +1,13 @@
-# jSVG - Simple JavaScript SVG Asset Managemenet (uses jQuery)
+# jSVG - Simple JavaScript SVG Asset Management (uses jQuery)
 
-I needed an easy way to integrate vector images for a project I was working on lately. My first thought was to (ab)use a font. However I don't like the workflow and the update procedure is quite a pain - in my mind.
+I needed an easy way to integrate vector images for a project I was working on lately. My first thought was to (ab)use a font. However I don't like the work-flow and the update procedure is quite a pain - in my mind.
 
-Wouldn't it be nice to save SVG's to a folder and use them directly in your browser? Thank's to modern browsers this is no dream anymore.
+Wouldn't it be nice to save SVG's to a folder and use them directly in your browser? Thanks to modern browsers this is no dream anymore.
 
-## Workflow
+## Work-flow
 
 1. Save all your SVG (1.1) files into an asset folder
-2. Run the provided jsvg.py file to create a combined asset file
+2. Run the provided **jsvg.py** file to create a combined asset file
 3. Use the SVGLoader class to load the asset file
 4. Questions?
 
@@ -33,7 +33,7 @@ Is a little python command line program to help you combine all your SVG files i
 
 > jsvg.py --help
 
-I guess there's a way to watch the assets folter for file changes and then run the script automatically. I didn't had time to digg into that, so feel free to contribute.
+I guess there's a way to observe the assets folder for file changes and then run the script automatically. I didn't had time to dig into that, so feel free to contribute.
 
 I have also to mention that I have almost no Python skills so the code could be improved I guess. Again, any help would be much appreciated.
 
