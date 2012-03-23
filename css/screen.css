@@ -46,6 +46,9 @@ section.note {
 	margin-bottom: 60px;
 	border-bottom: none;
 }
+section.note > a {
+	text-decoration: none;
+}
 #intro p,
 #intro img {
 	vertical-align: middle;
@@ -87,6 +90,7 @@ button.download {
 	padding: 0.2em 0.4em;
 	margin: 1em;
 	top: 0;
+	cursor: pointer;
 }
 button.download:hover {
 	background-color: #49CFF5;
