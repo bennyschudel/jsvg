@@ -9,8 +9,8 @@ body {
 }
 
 header {
-	margin-top: 64px;
-	margin-bottom: 32px;
+	padding-top: 64px;
+	padding-bottom: 32px;
 	text-align: center;
 }
 header span.note {
@@ -93,6 +93,28 @@ button.download:hover {
 }
 button.download:active {
 	top: 2px;
+}
+
+#fork-me {
+	position: absolute;
+	top: 1.5em;
+	right: 1.5em;
+}
+
+.fork-me {
+	width: 8em;
+	height: 8em;
+
+	transition: all 0.3s ease-out;
+}
+.fork-me:hover {
+	width: 10em;
+	height: 10em;
+
+	transform: rotate(15deg);
+}
+.fork-me:hover path {
+	fill: #49cff5;
 }
 
 #icon {

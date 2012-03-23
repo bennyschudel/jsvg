@@ -29,8 +29,10 @@
 
 	</head>
 	<body>
+
 		<header>
 			<p>An attempt to bring simple SVG Asset Management into modern browsers.<br><span class="note">(uses <a href="http://jquery.com" target="_blank">jQuery</a> and works in all modern browsers ;)</span></p>
+			<div id="fork-me"><a href="https://github.com/bennyschudel/jsvg/"></a></div>
 		</header>
 
 		<section id="intro">
@@ -70,12 +72,12 @@
 </pre>
 		</section>
 		<section class="note">
-			<a href=""><button class="download">Download form GitHub</button></a>
+			<a href="https://github.com/bennyschudel/jsvg/raw/master/dist/jsvg-0.5.1.zip"><button class="download">Download form GitHub</button></a><br>
 			<p>Thanks for stopping by. If you like you can drop <a href="http://twitter.com/bennyschudel" target="_blank">me</a> a line or two.<br>BTW there's a <a href="http://www.github.com/bennyschudel/jsvg" target="_blank">README</a> on GitHub ;)</p>
 		</section>
 
 		<footer>
-			<p>© 2012 by <a href="http://twitter.com/bennyschudel">Benny Schudel</a>, MIT License</p>
+			<p>© 2012 by <a href="http://twitter.com/bennyschudel">Benny Schudel</a>, <a href="https://github.com/bennyschudel/jsvg/blob/master/LICENSE" target="_blank">MIT License</a></p>
 		</footer>
 
 		<script src="src/lib/jquery-1.7.1.min.js"></script>
@@ -99,9 +101,11 @@
 
 							$logo = asset.get('#logo'),
 							$icon = asset.get('#icon-settings', 'icon');
+							$fork_me = asset.get('#fork-me');
 
 						$('header').prepend($logo);
 						$('#icon').append($icon);
+						$('#fork-me > a').append($fork_me);
 					});
 
 			});
