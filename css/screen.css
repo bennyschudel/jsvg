@@ -80,7 +80,7 @@ pre.code {
 	border-radius: 0.4em;
 }
 
-button.download {
+button.button {
 	background-color: hsla(0,0%,0%,0.8);
 	color: #fff;
 	border-radius: 0.3em;
@@ -88,14 +88,14 @@ button.download {
 	font-weight: bold;
 	border: none;
 	padding: 0.2em 0.4em;
-	margin: 1em;
+	margin: 0.2em;
 	top: 0;
 	cursor: pointer;
 }
-button.download:hover {
+button.button:hover {
 	background-color: #49CFF5;
 }
-button.download:active {
+button.button:active {
 	top: 2px;
 }
 
