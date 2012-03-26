@@ -1,79 +1,3 @@
-if (!window.$sa) {
-	window.$sa = {};
-}
-$sa.SVGLoader = (function($, undefined) {
-	var _ns = 'sa',
-		_name = 'svgloader',
-
-		_instance,
-
-	SVGLoader = function(options) {
-		var self = this,
-
-			opt = {
-				cache: true
-			},
-			core = {},
-			assets = {};
-
-		self.init = function() {
-			$.extend(true, opt, options);
-		};
-
-		self.load = function() { // *options
-			var _opt = $.extend({
-					url: '',
-					index: null,
-					cache: opt.cache
-				}, arguments[0]),
-
-				index = _opt.index;
-
-			if (!index) {
-				index = _opt['index'] = _opt.url.replace(/\.svgz?$/, '');
-			}
-
-			var asset = assets[index] = new $sa.SVGAsset(_opt);
-
-			return asset.load();
-		};
-
-		self.getAsset = function(index) {
-			if (!index in assets) {
-
-				throw new Error("Could not find asset: "+index);
-			}
-
-			return assets[index];
-		};
-
-		self.getSprite = function(asset, id) {
-			if (!id && asset.indexOf('#')) {
-				var parts = asset.split('#');
-
-				asset = parts[0];
-				id = parts[1];
-			}
-
-			return self.getAsset(asset).getSprite(id);
-		};
-
-		self.init();
-	};
-
-	_static = {
-		name: _name,
-		instance: function(options) {
-			if (!_instance) {
-				_instance = new SVGLoader(options);
-			}
-
-			return _instance;
-		}
-	};
-
-	return _static;
-})(jQuery);
 $sa.SVGAsset = (function($, undefined) {
 	var _ns = 'sa',
 		_name = 'svgasset';
@@ -126,7 +50,7 @@ $sa.SVGAsset = (function($, undefined) {
 			})
 			.fail(function(data) {
 
-				throw new Error("Could not load svg file: "+url);
+				throw new Error("Could not load svg file: "+opt.url);
 			});
 
 			return xhr;

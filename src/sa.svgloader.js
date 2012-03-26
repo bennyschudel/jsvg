@@ -46,7 +46,7 @@ $sa.SVGLoader = (function($, undefined) {
 		};
 
 		self.getSprite = function(asset, id, cls) {
-			return self.getAsset(asset).getSprite(id, cls);
+			return self.getAsset(asset).get(id, cls);
 		};
 
 		self.init();
