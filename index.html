@@ -40,9 +40,7 @@
             url: 'package.svgz'
         })
         .done(function() {
-            var asset = svgloader.getAsset('package'),
-
-                $icon = asset.get('#icon-settings', 'icon');
+            var $icon = this.asset.get('#icon-settings', 'icon');
 
             $('#icon').append($icon);
         });
@@ -53,8 +51,9 @@
 </pre>
 		</section>
 		<section class="note">
-			<a href="https://github.com/bennyschudel/jsvg/raw/master/dist/jsvg-0.5.2.zip"><button class="button">Download</button></a>
+			<a href="https://github.com/bennyschudel/jsvg/raw/master/dist/jsvg-0.5.3.zip"><button class="button">Download 0.5.3</button></a>
 			<a href="https://github.com/bennyschudel/jsvg/"><button class="button">GitHub</button></a><br>
+			<div id="torch"></div>
 			<p>Thanks for stopping by. If you like you can drop <a href="http://twitter.com/bennyschudel" target="_blank">me</a> a line or two.<br>BTW there's a <a href="http://www.github.com/bennyschudel/jsvg" target="_blank">README</a> on GitHub ;)</p>
 		</section>
 
@@ -79,15 +78,15 @@
 						url: 'package.svgz'
 					})
 					.done(function() {
-						var asset = svgloader.getAsset('package'),
-
-							$logo = asset.get('#logo'),
-							$icon = asset.get('#icon-settings', 'icon');
-							$fork_me = asset.get('#fork-me');
+						var $logo = this.asset.get('#logo'),
+							$icon = this.asset.get('#icon-settings', 'icon'),
+							$fork_me = this.asset.get('#fork-me'),
+							$torch = this.asset.get('#torch');
 
 						$('header').prepend($logo);
 						$('#icon').append($icon);
 						$('#fork-me > a').append($fork_me);
+						$('#torch').append($torch);
 					});
 
 			});

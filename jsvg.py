@@ -7,10 +7,15 @@ import glob
 import re
 import gzip
 
-VERSION = '0.5.1'
+VERSION = '0.5.2'
 
-RE_STRIP_WHITESPACES = re.compile(r'([\t\n\r]| {2,})')
+RE_STRIP_WHITESPACES = re.compile(r'([\t\n\r])')
+RE_CLEAN_MULTISPACES = re.compile(r' {2,}')
 RE_FIND_SVG = re.compile(r'<svg\b[^>]*>(?!<svg).*?</svg>')
+RE_FIND_IDS = re.compile(r'<([a-zA-Z0-9_]*)[^>]*id="([^"]*)')
+RE_IS_SEQUENCE = re.compile(r'^[a-zA-Z]+[0-9_]+$')
+
+idIterator = 0
 
 def getvar(var, default):
 	return default if not var else var
@@ -24,11 +29,26 @@ def sizeof_fmt(num):
 	return '%3.1f%s' % (num, 'T')
 
 
+def unifySequencedIds(svg, prefix='jsvg_'):
+	global idIterator
+
+	ids = RE_FIND_IDS.findall(svg)
+	for match in ids:
+		tag, id = match
+		if RE_IS_SEQUENCE.match(id):
+			idIterator += 1
+			newId = '%s%s' % (prefix, idIterator)
+			svg = re.sub(r'(?<=id=")(%s)(?=")' % id, newId, svg)
+			svg = re.sub(r'(?<=#)%s(?=["\)\s])' % id, newId, svg)
+	return svg
+
+
+def normpath(dir):
+	return os.path.normpath(dir) + os.sep
+
+
 def process(args):
 	svgs = []
-
-	def normpath(dir):
-		return os.path.normpath(dir) + os.sep
 
 	name = getvar(args.name, 'package')
 	sdir = normpath(getvar(args.srcdir, 'svg/'))
@@ -42,7 +62,9 @@ def process(args):
 	for fname in glob.glob('%s*.svg' % sdir):
 		file = open(fname, 'r')
 		content = file.read()
+		content = re.sub(RE_CLEAN_MULTISPACES, ' ', content)
 		content = re.sub(RE_STRIP_WHITESPACES, '', content)
+		content = unifySequencedIds(content, '%s_' % name)
 		svgs += RE_FIND_SVG.findall(content)
 	data += '%s\n</svg>' % '\n\t'.join(svgs)
 

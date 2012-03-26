@@ -16,15 +16,14 @@ Wouldn't it be nice to save SVG's to a folder and use them directly in your brow
 var svgloader = $sa.SVGLoader.instance();
 
 svgloader
-	.load({
-		url: 'icons.svgz'
-	})
-	.done(function() {
-		var asset = svgloader.getAsset('icons'),
-				$icon = asset.get('your-layer-name', 'optional class');
+    .load({
+        url: 'icons.svgz'
+    })
+    .done(function() {
+        var $icon = this.asset.get('your-layer-name', 'optional class');
 
-		$body.append($icon);
-	});
+        $body.append($icon);
+    });
 
 ```
 

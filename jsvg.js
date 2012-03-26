@@ -107,7 +107,10 @@ $sa.SVGAsset = (function($, undefined) {
 			var xhr = self.xhr.load = $.ajax({
 				url: opt.url,
 				cache: opt.cache,
-				dataType: 'text'
+				dataType: 'text',
+				context: {
+					asset: self
+				}
 			})
 			.done(function(data) {
 				core.data = $.parseXML(data);
