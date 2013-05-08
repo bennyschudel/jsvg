@@ -14,8 +14,11 @@ RE_CLEAN_MULTISPACES = re.compile(r' {2,}')
 RE_FIND_SVG = re.compile(r'<svg\b[^>]*>(?!<svg).*?</svg>')
 RE_FIND_IDS = re.compile(r'<([a-zA-Z0-9_]*)[^>]*id="([^"]*)')
 RE_IS_SEQUENCE = re.compile(r'^[a-zA-Z]+[0-9_]+$')
+RE_NORMALIZE = re.compile(r'[^\w\s\-_]+')
+RE_EXCLUDED_DIR = re.compile(r'^_|.*'+os.sep+'_')
 
 idIterator = 0
+
 
 def getvar(var, default):
 	return default if not var else var
@@ -47,18 +50,18 @@ def normpath(dir):
 	return os.path.normpath(dir) + os.sep
 
 
-def process(args):
-	svgs = []
+def normfile(str):
+	return re.sub(RE_NORMALIZE, '-', str).strip('-').lower()
 
-	name = getvar(args.name, 'package')
-	sdir = normpath(getvar(args.srcdir, 'svg/'))
-	ddir = normpath(getvar(args.destdir, os.getcwd()))
+
+def process_dir(name='package', sdir='svg/', ddir=os.getcwd(), gzipped=True):
+	svgs = []
 
 	for dir in sdir, ddir:
 		if not os.path.isdir(dir):
 			sys.exit("ERROR: dir '%s' does not exists" % dir)
 
-	data = '<?xml version="1.0" encoding="UTF-8"?>\n<svg style="display: none">\n\t<defs>\n\t\t'
+	data = '<?xml version="1.0" encoding="UTF-8"?>\n<svg style="display: none;">\n\t<defs>\n\t\t'
 	for fname in glob.glob('%s*.svg' % sdir):
 		file = open(fname, 'r')
 		content = file.read()
@@ -68,19 +71,35 @@ def process(args):
 		svgs += RE_FIND_SVG.findall(content)
 	data += '%s\n\t</defs>\n</svg>' % '\n\t\t'.join(svgs)
 
-	if not args.gzip:
+	if gzipped:
+		nfile = gzip.open('%s%s.svgz' % (ddir, name), 'w')
+	else:
 		nfile = open('%s%s.svg' % (ddir, name), 'w')
-		nfile.write(data)
-		nfile.close()
-		nsize = os.path.getsize(nfile.name)
-		print "SUCCESS: %s created with %s" % (nfile.name, sizeof_fmt(nsize))
+	nfile.write(data)
+	nfile.close()
+	nsize = os.path.getsize(nfile.name)
+	print "SUCCESS: %s created with %s" % (nfile.name, sizeof_fmt(nsize))
 
-	if args.gzip:
-		gfile = gzip.open('%s%s.svgz' % (ddir, name), 'w')
-		gfile.write(data)
-		gfile.close()
-		gsize = os.path.getsize(gfile.name)
-		print "SUCCESS: %s created with %s" % (gfile.name, sizeof_fmt(gsize))
+
+def process(args):
+	name = getvar(args.name, 'package')
+	sdir = normpath(args.srcdir)
+	ddir = normpath(args.destdir)
+	gzipped = args.gzip
+
+	for root, dirs, files in os.walk(sdir, topdown=False):
+		for dname in dirs:
+			nsdir = normpath(root+os.sep+dname)
+
+			if (RE_EXCLUDED_DIR.match(nsdir)):
+				continue
+
+			nfile = normfile(nsdir.replace(sdir, ''))
+			nname = "%s-%s" % (name, nfile)
+
+			process_dir(nname, nsdir, ddir, gzipped)
+
+	process_dir(name, sdir, ddir, gzipped)
 
 
 def main():
