@@ -17,7 +17,7 @@ RE_IS_SEQUENCE = re.compile(r'^[a-zA-Z]+[0-9_]+$')
 RE_NORMALIZE = re.compile(r'[^\w\s\-_]+')
 RE_EXCLUDED_DIR = re.compile(r'^_|.*'+os.sep+'_')
 
-idIterator = 0
+id_iterator = 0
 
 
 def getvar(var, default):
@@ -32,15 +32,15 @@ def sizeof_fmt(num):
 	return '%3.1f%s' % (num, 'T')
 
 
-def unifySequencedIds(svg, prefix='jsvg_'):
-	global idIterator
+def unify_sequenced_ids(svg, prefix='jsvg_'):
+	global id_iterator
 
 	ids = RE_FIND_IDS.findall(svg)
 	for match in ids:
 		tag, id = match
 		if RE_IS_SEQUENCE.match(id):
-			idIterator += 1
-			newId = '%s%s' % (prefix, idIterator)
+			id_iterator += 1
+			newId = '%s%s' % (prefix, id_iterator)
 			svg = re.sub(r'(?<=id=")(%s)(?=")' % id, newId, svg)
 			svg = re.sub(r'(?<=#)%s(?=["\)\s])' % id, newId, svg)
 	return svg
@@ -67,7 +67,7 @@ def process_dir(name='package', sdir='svg/', ddir=os.getcwd(), gzipped=True):
 		content = file.read()
 		content = re.sub(RE_CLEAN_MULTISPACES, ' ', content)
 		content = re.sub(RE_STRIP_WHITESPACES, '', content)
-		content = unifySequencedIds(content, '%s_' % name)
+		content = unify_sequenced_ids(content, '%s_' % name)
 		svgs += RE_FIND_SVG.findall(content)
 	data += '%s\n\t</defs>\n</svg>' % '\n\t\t'.join(svgs)
 
@@ -109,9 +109,12 @@ def main():
 	parser.add_argument('--name', nargs='?', default='package', help="basename of the output file(s)")
 	parser.add_argument('--srcdir', nargs='?', default='./assets/', help="input directory - that's where your svg(s) reside(s)")
 	parser.add_argument('--destdir', nargs='?', default='.', help="output directory - that's where the file(s) should be written to")
-	parser.add_argument('--gzip', action='store_true')
+	parser.add_argument('--gzip', action='store_true', help="compress output with gzip")
 
 	try:
+		if len(sys.argv) is 1:
+			parser.print_help()
+			sys.exit(1)
 		args = parser.parse_args()
 		process(args)
 
