@@ -1,6 +1,6 @@
 {
   "name": "jsvg",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "main": "jsvg.js",
   "dependencies": {
     "jquery": "~1.8.1"

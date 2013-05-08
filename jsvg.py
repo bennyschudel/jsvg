@@ -7,7 +7,7 @@ import glob
 import re
 import gzip
 
-VERSION = '0.5.4'
+VERSION = '0.5.5'
 
 RE_STRIP_WHITESPACES = re.compile(r'([\t\n\r])')
 RE_CLEAN_MULTISPACES = re.compile(r' {2,}')
