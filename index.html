@@ -67,11 +67,9 @@
 		<script src="js/jsvg-0.5.6.js"></script>
 
 		<script>
-			jQuery().ready(function() {
+			$().ready(function() {
 
-				var svgloader = $sa.SVGLoader.instance();
-
-				svgloader
+				 $sa.SVGLoader
 					.load({
 						url: 'package.svg'
 					})
