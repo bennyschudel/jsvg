@@ -132,13 +132,6 @@ button.button:active {
 
 	transition: all 0.3s ease-out;
 }
-#icon:hover {
-	width: 15em;
-	height: 15em;
-
-	transform: rotate(180deg);
-	transform-origin: center center;
-}
 
 .logo {
 	display: inline-block;
@@ -152,8 +145,8 @@ button.button:active {
 }
 
 .icon {
-	width: 100%;
-	height: 100%;
+	width: 10em;
+	height: 10em;
 }
 
 #torch {
