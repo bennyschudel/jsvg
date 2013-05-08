@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>jSVG demo</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width">
+
+		<link rel="stylesheet" href="screen.css">
+	</head>
+	<body>
+		<div id="logo"></div>
+
+		<div id="icons">
+			<button id="alert"><span>Alert</span></button>
+			<button id="settings"><span>Settings</span></button>
+		</div>
+
+
+		<script src="js/jquery.min.js"></script>
+
+		<script src="src/sa.core.js"></script>
+		<script src="src/sa.svgasset.js"></script>
+		<script src="src/sa.svgloader.js"></script>
+
+		<script>
+			$().ready(function() {
+
+				$sa.SVGLoader
+					.load({
+						url: 'assets/package.svg'
+					})
+					.done(function() {
+						var $logo = this.asset.get('#svg-logo', 'logo');
+
+						$('#logo').append($logo);
+					});
+
+				$sa.SVGLoader
+					.load({
+						url: 'assets/package-icons.svg'
+					})
+					.done(function() {
+						var
+							$icon_alert = this.asset.get('#svg-icon-alert', 'icon'),
+							$icon_settings = this.asset.get('#svg-icon-settings', 'icon');
+
+						$('#alert').prepend($icon_alert);
+						$('#settings').prepend($icon_settings);
+					});
+
+			});
+		</script>
+	</body>
+</html>

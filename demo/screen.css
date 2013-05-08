@@ -1,0 +1,41 @@
+* {
+	position: relative;
+}
+button {
+	font-size: 1em;
+	font-weight: bold;
+	padding: 0.5em;
+	border: none;
+	background-color: #999;
+	color: #EEE;
+	border-bottom: 2px solid #666;
+	border-radius: 2px;
+}
+button:hover {
+	background-color: #666;
+	color: #DDD;
+	border-color: #333;
+}
+button:active {
+	top: 2px;
+	border-bottom: none;
+	background-color: #333;
+	color: #CCC;
+}
+button span {
+	vertical-align: middle;
+}
+button .icon {
+	width: 2em;
+	height: 2em;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 0.5em;
+	fill: #EEE;
+}
+button:hover .icon {
+	fill: #DDD;
+}
+button:active .icon {
+	fill: #CCC;
+}
