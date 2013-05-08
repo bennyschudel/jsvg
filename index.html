@@ -21,11 +21,11 @@
 			<img src="img/illustrator001.png" style="display: inline-block;">
 		</section>
 		<section>
-			<h2>Step 2: Run the python jsvg.py script from the command line</h2>
-			<pre class="code">&gt; jsvg.py --gzip --srcdir=assets</pre>
+			<h2>Step 2: Run the <u>jsvg</u> python script from the command line</h2>
+			<pre class="code">&gt; jsvg --name=package --srcdir=assets</pre>
 		</section>
 		<section>
-			<h2>Step 3: Load the created <a href="http://jsvg.swissamigos.com/package.svgz" taget="_blank">package.svgz</a>*</h2>
+			<h2>Step 3: Load the created <a href="http://jsvg.swissamigos.com/package.svg" taget="_blank">package.svgz</a>*</h2>
 			<div id="icon"></div>
 			<pre>
 <em>&lt;script src="jquery.min.js"&gt;&lt;/script&gt;</em>
@@ -33,11 +33,9 @@
 
 <em>$().ready(function() {</em>
 
-    var svgloader = $sa.SVGLoader.instance();
-
-    svgloader
+    $sa.SVGLoader
         .load({
-            url: 'package.svgz'
+            url: 'package.svg'
         })
         .done(function() {
             var $icon = this.asset.get('#icon-settings', 'icon');
@@ -47,7 +45,7 @@
 
 <em>});</em>
 
-<em>// *you need to configure your server to handle gzip compressed files</em>
+<em>// *you need to configure your server to serve gzip compressed svg files</em>
 </pre>
 		</section>
 		<section class="note">
