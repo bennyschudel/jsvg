@@ -7,7 +7,7 @@ Wouldn't it be nice to save SVG's to a folder and use them directly in your brow
 ## Work-flow
 
 1. Save all your SVG (1.1) files into an asset folder
-2. Run the provided **jsvg.py** file to create a combined asset file
+2. Run the provided **bin/jsvg** file to create a combined asset file
 3. Use the SVGLoader class to load the asset file
 4. Questions?
 
@@ -15,7 +15,7 @@ Wouldn't it be nice to save SVG's to a folder and use them directly in your brow
 
 $sa.SVGLoader
     .load({
-        url: 'icons.svg'
+        url: 'package.svg'
     })
     .done(function() {
         var $icon = this.asset.get('your-layer-name', 'optional-class');
@@ -44,4 +44,4 @@ My name is Benny Schudel. I'm Swiss and call myself New Media Engineer.
 I would love to get feedback from you! My twitter handle is [@bennyschudel](http://twitter.com/bennyschudel). Thank's & enjoy!
 
 #### LEGAL
-Copyright (c) 2011 Benny Schudel - [MIT-License](https://raw.github.com/bennyschudel/jsvg/master/LICENSE)
+Copyright (c) 2013 Benny Schudel - [MIT-License](https://raw.github.com/bennyschudel/jsvg/master/LICENSE)
