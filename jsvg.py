@@ -58,7 +58,7 @@ def process(args):
 		if not os.path.isdir(dir):
 			sys.exit("ERROR: dir '%s' does not exists" % dir)
 
-	data = '<?xml version="1.0" encoding="UTF-8"?>\n<svg>\n\t'
+	data = '<?xml version="1.0" encoding="UTF-8"?>\n<svg style="display: none">\n\t<defs>\n\t\t'
 	for fname in glob.glob('%s*.svg' % sdir):
 		file = open(fname, 'r')
 		content = file.read()
@@ -66,7 +66,7 @@ def process(args):
 		content = re.sub(RE_STRIP_WHITESPACES, '', content)
 		content = unifySequencedIds(content, '%s_' % name)
 		svgs += RE_FIND_SVG.findall(content)
-	data += '%s\n</svg>' % '\n\t'.join(svgs)
+	data += '%s\n\t</defs>\n</svg>' % '\n\t\t'.join(svgs)
 
 	if not args.gzip:
 		nfile = open('%s%s.svg' % (ddir, name), 'w')
