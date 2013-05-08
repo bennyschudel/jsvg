@@ -1,11 +1,11 @@
 $sa.SVGAsset = (function($, undefined) {
-	var _ns = 'sa',
-		_name = 'svgasset';
+	var _name = 'svgasset',
 
-	SVGAsset = function(options) {
-		var self = this,
+	SVGAsset = function(options_) {
+		var
+			_this = this,
 
-			opt = {
+			options = {
 				url: '',
 				index: '',
 				cache: true,
@@ -21,48 +21,48 @@ $sa.SVGAsset = (function($, undefined) {
 				sprites: {}
 			};
 
-		self.xhr = {
-			load: null
+		this.init = function() {
+			$.extend(true, options, options_);
+
+			this.xhr = { load: null };
 		};
 
-		self.init = function() {
-			$.extend(true, opt, options);
-		};
-
-		self.load = function() {
-			if (self.xhr.load) { return self.xhr.load; }
+		this.load = function() {
+			if (this.xhr.load) { return this.xhr.load; }
 
 			core.ids = [];
 
-			var xhr = self.xhr.load = $.ajax({
-				url: opt.url,
-				cache: opt.cache,
-				dataType: 'text',
-				context: {
-					asset: self
-				}
-			})
-			.done(function(data) {
-				core.data = $.parseXML(data);
-				cache.$data = $(core.data);
-				core.ids = [];
+			var
+				xhr = this.xhr.load = $.ajax({
+					url: options.url,
+					cache: options.cache,
+					dataType: 'text',
+					context: {
+						asset: _this
+					}
+				})
+				.done(function(data) {
+					core.data = $.parseXML(data);
+					cache.$data = $(core.data);
+					core.ids = [];
 
-				cache.$data.find('[id]').each(function(index, item) {
-					core.ids.push(item.id);
+					cache.$data.find('[id]').each(function(index, item) {
+						core.ids.push(item.id);
+					});
+				})
+				.fail(function(data) {
+
+					throw new Error("Could not load svg file: "+options.url);
 				});
-			})
-			.fail(function(data) {
-
-				throw new Error("Could not load svg file: "+opt.url);
-			});
 
 			return xhr;
 		};
 
-		self.get = function(id, cls) {
+		this.get = function(id, cls) {
 			if (id && id[0] === '#') { id = id.slice(1); }
 
-			var className = [id, opt.className, cls].join(' '),
+			var
+				className = [id, options.className, cls].join(' '),
 				$sprite = cache.sprites[id],
 				$svg, $item, $body;
 
@@ -107,7 +107,7 @@ $sa.SVGAsset = (function($, undefined) {
 			return $sprite;
 		};
 
-		self.init();
+		this.init();
 	};
 
 	return SVGAsset;

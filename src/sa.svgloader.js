@@ -1,55 +1,59 @@
 $sa.SVGLoader = (function($, undefined) {
-	var _ns = 'sa',
-		_name = 'svgloader',
-
+	var _name = 'svgloader',
 		_instance,
 
-	SVGLoader = function(options) {
-		var self = this,
+	SVGLoader = function(options_) {
+		var
+			_this = this,
 
-			opt = {
+			options = {
 				cache: true
 			},
 			core = {},
 			assets = {};
 
-		self.init = function() {
-			$.extend(true, opt, options);
+		this.init = function() {
+			$.extend(true, options, options_);
 		};
 
-		self.load = function(arg0) {
-			var _opt = $.extend({
+		this.load = function(opt_) {
+			var
+				opt = $.extend({
 					url: '',
 					name: null,
-					cache: opt.cache
-				}, arg0),
+					cache: options.cache
+				}, opt_),
 
-				name = _opt.name;
+				name = opt.name;
 
 			if (!name) {
-				name = _opt['name'] = _opt.url.replace(/\.svgz?$/, '');
+				name = opt['name'] = opt.url.replace(/\.svgz?$/, '');
 			}
 
-			var asset = assets[name] = new $sa.SVGAsset(_opt);
+			var asset = assets[name] = new $sa.SVGAsset(opt);
 
 			return asset.load();
 		};
 
-		self.getAsset = function(name) {
-			if (name instanceof $sa.SVGAsset) { return name; }
+		this.getAsset = function(name) {
+			if (name instanceof $sa.SVGAsset) {
+
+				return name;
+			}
 
 			if (!(name in assets)) {
+
 				throw new Error("Could not find asset: "+name);
 			}
 
 			return assets[name];
 		};
 
-		self.getSprite = function(asset, id, cls) {
-			return self.getAsset(asset).get(id, cls);
+		this.getSprite = function(asset, id, cls) {
+			return this.getAsset(asset).get(id, cls);
 		};
 
-		self.init();
+		this.init();
 	};
 
 	if (!_instance) {
