@@ -13,24 +13,22 @@ Wouldn't it be nice to save SVG's to a folder and use them directly in your brow
 
 ```javascript
 
-var svgloader = $sa.SVGLoader.instance();
-
-svgloader
+$sa.SVGLoader
     .load({
-        url: 'icons.svgz'
+        url: 'icons.svg'
     })
     .done(function() {
-        var $icon = this.asset.get('your-layer-name', 'optional class');
+        var $icon = this.asset.get('your-layer-name', 'optional-class');
 
         $body.append($icon);
     });
 
 ```
 
-### jsvg.py
+### jsvg
 Is a little python command line program to help you combine all your SVG files into a single one file.
 
-> jsvg.py --help
+> bin/jsvg --help
 
 I guess there's a way to observe the assets folder for file changes and then run the script automatically. I didn't had time to dig into that, so feel free to contribute.
 
