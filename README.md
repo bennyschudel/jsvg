@@ -13,14 +13,12 @@ Wouldn't it be nice to save SVG's to a folder and use them directly in your brow
 
 ```javascript
 
-$sa.SVGLoader
+$sa.SVGLoader()
     .load({
         url: 'package.svg'
     })
     .done(function() {
-        var $icon = this.asset.get('your-layer-name', 'optional-class');
-
-        $body.append($icon);
+        $('body').append( this.asset.get('your-layer-name', 'optional-class') );
     });
 
 ```
