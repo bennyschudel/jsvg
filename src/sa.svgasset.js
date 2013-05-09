@@ -27,6 +27,8 @@
 				sprites   : {}
 			};
 
+		this.VERSION = '0.5.7';
+
 		this.init = function() {
 			$.extend(true, options, options_);
 
