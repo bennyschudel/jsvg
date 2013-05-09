@@ -17,9 +17,12 @@ if (!('$sa' in window)) {
 			_this = this,
 
 			options = {
-				cache: true
+				cache        : true,
+				appendToBody : true
 			},
 			assets = {};
+
+		this.VERSION = '0.5.7';
 
 		this.init = function() {
 			$.extend(true, options, options_);
@@ -28,14 +31,13 @@ if (!('$sa' in window)) {
 		this.load = function(opt_) {
 			var
 				opt = $.extend({
-					url: '',
-					name: null,
-					cache: options.cache
+					cache        : options.cache,
+					appendToBody : options.appendToBody
 				}, opt_),
 				name = opt.name;
 
 			if (!name) {
-				name = opt['name'] = opt.url.replace(/\.svgz?$/, '');
+				name = opt['name'] = opt.url.match(/([^\/]*)\.svgz?$/)[1];
 			}
 
 			var asset = assets[name] = new $sa.SVGAsset(opt);
@@ -45,12 +47,10 @@ if (!('$sa' in window)) {
 
 		this.getAsset = function(name) {
 			if (name instanceof $sa.SVGAsset) {
-
 				return name;
 			}
 
 			if (!(name in assets)) {
-
 				throw new Error("Could not find asset: "+name);
 			}
 
@@ -59,6 +59,10 @@ if (!('$sa' in window)) {
 
 		this.getSprite = function(asset, id, cls) {
 			return this.getAsset(asset).get(id, cls);
+		};
+
+		this.getAssets = function() {
+			return assets;
 		};
 
 		this.getOption = function(key) {
@@ -71,25 +75,34 @@ if (!('$sa' in window)) {
 })(window.$sa, window.jQuery);
 (function($sa, $) {
 
+	var
+		RE_TRIM = /^[\s]*|[\s]*$/g,
+
+		_trim = function(str) {
+			return str.replace(RE_TRIM, '');
+		};
+
 	$sa.SVGAsset = function(options_) {
 		var
 			_this = this,
 
 			options = {
-				url: '',
-				index: '',
-				cache: true,
-				className: null
+				url          : '',
+				index        : '',
+				cache        : true,
+				className    : null,
+				appendToBody : true
 			},
 			core = {
-				data: null,
-				ids: []
+				data      : null,
+				ids       : []
 			},
 			cache = {
-				$data: null,
-				$svg: null,
-				sprites: {}
+				$svg      : null,
+				sprites   : {}
 			};
+
+		this.VERSION = '0.5.7';
 
 		this.init = function() {
 			$.extend(true, options, options_);
@@ -104,24 +117,27 @@ if (!('$sa' in window)) {
 
 			var
 				xhr = this.xhr.load = $.ajax({
-					url: options.url,
-					cache: options.cache,
-					dataType: 'text',
-					context: {
-						asset: _this
+					url      : options.url,
+					cache    : options.cache,
+					dataType : 'text',
+					context  : {
+						asset : _this
 					}
 				})
-				.done(function(data) {
-					core.data = $.parseXML(data);
-					cache.$data = $(core.data);
-					core.ids = [];
+				.done(function(data_) {
+					var data = core.data  = $.parseXML(data_),
+						$svg = cache.$svg = $(data).find('> svg'),
+						ids  = core.ids   = [];
 
-					cache.$data.find('[id]').each(function(index, item) {
-						core.ids.push(item.id);
+					$svg.find('[id]').each(function(index, item) {
+						ids.push(item.id);
 					});
+
+					if (options.appendToBody) {
+						$('body').append($svg);
+					}
 				})
 				.fail(function(data) {
-
 					throw new Error("Could not load svg file: "+options.url);
 				});
 
@@ -132,21 +148,19 @@ if (!('$sa' in window)) {
 			if (id && id[0] === '#') { id = id.slice(1); }
 
 			var
-				className = [id, options.className, cls].join(' '),
+				className = _trim([id, options.className, cls].join(' ')),
 				$sprite = cache.sprites[id],
 				$svg, $item, $body;
 
 			// sprite is cached
 			if ($sprite) {
-
 				return $sprite.clone();
 			}
 
 			// find element
-			$item = cache.$data.find('#'+id);
+			$item = cache.$svg.find('#'+id);
 			if (!$item[0]) {
-
-				throw new Error("Could not find element #"+id);
+				throw new Error("Could not find svg element #"+id);
 			}
 
 			// is svg element
@@ -175,6 +189,10 @@ if (!('$sa' in window)) {
 			cache.sprites[id] = $sprite.clone();
 
 			return $sprite;
+		};
+
+		this.getIds = function() {
+			return core.ids;
 		};
 
 		this.getOption = function(key) {
