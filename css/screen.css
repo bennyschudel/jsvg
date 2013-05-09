@@ -3,6 +3,10 @@
 	box-sizing: border-box;
 }
 
+svg > defs {
+	display: none;
+}
+
 body {
 	margin: 0;
 	font-family: Monaco, Andale, monospace;
@@ -153,7 +157,7 @@ button.button:active {
 	height: 40em;
 	overflow: hidden;
 }
-#torch .torch {
+#torch .svg-torch {
 	width: 21.5em;
 	height: 67.5em;
 }

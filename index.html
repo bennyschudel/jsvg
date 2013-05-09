@@ -25,7 +25,7 @@
 			<pre class="code">&gt; jsvg --name=package --srcdir=assets</pre>
 		</section>
 		<section>
-			<h2>Step 3: Load the created <a href="http://jsvg.swissamigos.com/package.svg" taget="_blank">package.svg</a>*</h2>
+			<h2>Step 3: Load the created <a href="package.svg" taget="_blank">package.svg</a>*</h2>
 			<div id="icon"></div>
 			<pre>
 <em>&lt;script src="jquery.min.js"&gt;&lt;/script&gt;</em>
@@ -54,10 +54,10 @@
 		</section>
 
 		<footer>
-			<p>© 2012 by <a href="http://twitter.com/bennyschudel">Benny Schudel</a>, <a href="https://github.com/bennyschudel/jsvg/blob/master/LICENSE" target="_blank">MIT License</a></p>
+			<p>© 2013 by <a href="http://twitter.com/bennyschudel">Benny Schudel</a>, <a href="https://github.com/bennyschudel/jsvg/blob/master/LICENSE" target="_blank">MIT License</a></p>
 		</footer>
 
-		<script src="js/jquery-1.7.1.min.js"></script>
+		<script src="js/jquery-1.9.1.min.js"></script>
 		<script src="js/prefixfree.min.js"></script>
 
 		<script src="js/jsvg-0.5.7.js"></script>
@@ -70,10 +70,10 @@
 						url: 'package.svg'
 					})
 					.done(function() {
-						$('header').prepend( this.asset.get('#logo') );
-						$('#icon').append( this.asset.get('#icon-settings', 'icon') );
-						$('#fork-me > a').append( this.asset.get('#fork-me') );
-						$('#torch').append( this.asset.get('#torch') );
+						$('header').prepend( this.asset.get('#svg-logo') );
+						$('#icon').append( this.asset.get('#svg-icon-settings', 'icon') );
+						$('#fork-me > a').append( this.asset.get('#svg-fork-me') );
+						$('#torch').append( this.asset.get('#svg-torch') );
 					});
 
 			});
