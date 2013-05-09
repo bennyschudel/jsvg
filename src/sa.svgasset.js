@@ -1,23 +1,30 @@
 (function($sa, $) {
 
+	var
+		RE_TRIM = /^[\s]*|[\s]*$/g,
+
+		_trim = function(str) {
+			return str.replace(RE_TRIM, '');
+		};
+
 	$sa.SVGAsset = function(options_) {
 		var
 			_this = this,
 
 			options = {
-				url: '',
-				index: '',
-				cache: true,
-				className: null
+				url          : '',
+				index        : '',
+				cache        : true,
+				className    : null,
+				appendToBody : true
 			},
 			core = {
-				data: null,
-				ids: []
+				data      : null,
+				ids       : []
 			},
 			cache = {
-				$data: null,
-				$svg: null,
-				sprites: {}
+				$svg      : null,
+				sprites   : {}
 			};
 
 		this.init = function() {
@@ -33,24 +40,27 @@
 
 			var
 				xhr = this.xhr.load = $.ajax({
-					url: options.url,
-					cache: options.cache,
-					dataType: 'text',
-					context: {
-						asset: _this
+					url      : options.url,
+					cache    : options.cache,
+					dataType : 'text',
+					context  : {
+						asset : _this
 					}
 				})
-				.done(function(data) {
-					core.data = $.parseXML(data);
-					cache.$data = $(core.data);
-					core.ids = [];
+				.done(function(data_) {
+					var data = core.data  = $.parseXML(data_),
+						$svg = cache.$svg = $(data).find('> svg'),
+						ids  = core.ids   = [];
 
-					cache.$data.find('[id]').each(function(index, item) {
-						core.ids.push(item.id);
+					$svg.find('[id]').each(function(index, item) {
+						ids.push(item.id);
 					});
+
+					if (options.appendToBody) {
+						$('body').append($svg);
+					}
 				})
 				.fail(function(data) {
-
 					throw new Error("Could not load svg file: "+options.url);
 				});
 
@@ -61,21 +71,19 @@
 			if (id && id[0] === '#') { id = id.slice(1); }
 
 			var
-				className = [id, options.className, cls].join(' '),
+				className = _trim([id, options.className, cls].join(' ')),
 				$sprite = cache.sprites[id],
 				$svg, $item, $body;
 
 			// sprite is cached
 			if ($sprite) {
-
 				return $sprite.clone();
 			}
 
 			// find element
-			$item = cache.$data.find('#'+id);
+			$item = cache.$svg.find('#'+id);
 			if (!$item[0]) {
-
-				throw new Error("Could not find element #"+id);
+				throw new Error("Could not find svg element #"+id);
 			}
 
 			// is svg element
@@ -104,6 +112,10 @@
 			cache.sprites[id] = $sprite.clone();
 
 			return $sprite;
+		};
+
+		this.getIds = function() {
+			return core.ids;
 		};
 
 		this.getOption = function(key) {

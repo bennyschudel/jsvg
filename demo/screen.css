@@ -1,7 +1,30 @@
 * {
 	position: relative;
+	box-sizing: border-box;
 }
-button {
+body {
+	font-family: "Neue Helvetica", Helvetica, Arial, sans-serif;
+	margin: 0;
+	padding: 0.5em 0 0 0.5em;
+}
+svg {
+	display: block;
+}
+svg > defs {
+	display: none;
+}
+
+h1, h2 {
+	border-bottom: 1px solid black;
+}
+
+.column {
+	width: 50%;
+	float: left;
+	padding-right: 0.5em;
+}
+
+.button {
 	font-size: 1em;
 	font-weight: bold;
 	padding: 0.5em;
@@ -11,31 +34,35 @@ button {
 	border-bottom: 2px solid #666;
 	border-radius: 2px;
 }
-button:hover {
+.button:hover {
 	background-color: #666;
 	color: #DDD;
 	border-color: #333;
 }
-button:active {
+.button:active {
 	top: 2px;
 	border-bottom: none;
 	background-color: #333;
 	color: #CCC;
 }
-button span {
+.button span {
 	vertical-align: middle;
 }
-button .icon {
+.button .icon {
 	width: 2em;
 	height: 2em;
-	display: inline-block;
+	display: inline;
 	vertical-align: middle;
 	margin-right: 0.5em;
 	fill: #EEE;
 }
-button:hover .icon {
+.button:hover .icon {
 	fill: #DDD;
 }
-button:active .icon {
+.button:active .icon {
 	fill: #CCC;
+}
+
+.logo:hover {
+	fill: #49CFF5;
 }

@@ -10,12 +10,48 @@
 		<link rel="stylesheet" href="screen.css">
 	</head>
 	<body>
-		<div id="logo"></div>
+		<div class="column">
+			<header>
+				<h2>Direct injection</h2>
+			</header>
 
-		<div id="icons">
-			<button id="alert"><span>Alert</span></button>
-			<button id="settings"><span>Settings</span></button>
+			<div id="logo" style="width: 256px; height: 128px;"></div>
+
+			<div id="torch" style="width: 86px; height: 270px;"></div>
+
+			<div id="icons">
+				<button id="alert" class="button"><span>Alert</span></button>
+				<button id="settings" class="button"><span>Settings</span></button>
+			</div>
 		</div>
+		<div class="column">
+			<header>
+				<h2>With the use tag</h2>
+			</header>
+
+			<svg class="logo" style="width: 256px; height: 128px;">
+				<use xlink:href="#svg-logo"></use>
+			</svg>
+
+			<svg class="torch" style="width: 86px; height: 270px;">
+				<use xlink:href="#svg-torch"></use>
+			</svg>
+
+			<div>
+				<button class="button">
+					<svg class="icon">
+						<use xlink:href="#svg-icon-alert"></use>
+					</svg><span>Alert</span>
+				</button>
+				<button class="button">
+					<svg class="icon">
+						<use xlink:href="#svg-icon-settings"></use>
+					</svg><span>Settings</span>
+				</button>
+			</div>
+
+		</div>
+
 
 
 		<script src="js/jquery.min.js"></script>
@@ -26,16 +62,13 @@
 
 		<script>
 			$().ready(function() {
-				$sa.SVGLoader({
-					cache: false
-				})
+				$sa.SVGLoader()
 					.load({
 						url: 'assets/package.svg'
 					})
 					.done(function() {
-						var $logo = this.asset.get('#svg-logo', 'logo');
-
-						$('#logo').append($logo);
+						$('#logo').append( this.asset.get('#svg-logo', 'logo') );
+						$('#torch').append( this.asset.get('#svg-torch', 'torch') );
 					});
 
 				$sa.SVGLoader()
@@ -43,12 +76,8 @@
 						url: 'assets/package-icons.svg'
 					})
 					.done(function() {
-						var
-							$icon_alert = this.asset.get('#svg-icon-alert', 'icon'),
-							$icon_settings = this.asset.get('#svg-icon-settings', 'icon');
-
-						$('#alert').prepend($icon_alert);
-						$('#settings').prepend($icon_settings);
+						$('#alert').prepend( this.asset.get('#svg-icon-alert', 'icon') );
+						$('#settings').prepend( this.asset.get('#svg-icon-settings', 'icon') );
 					});
 
 			});
