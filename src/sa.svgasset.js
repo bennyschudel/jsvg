@@ -1,7 +1,6 @@
-$sa.SVGAsset = (function($, undefined) {
-	var _name = 'svgasset',
+(function($sa, $) {
 
-	SVGAsset = function(options_) {
+	$sa.SVGAsset = function(options_) {
 		var
 			_this = this,
 
@@ -107,8 +106,11 @@ $sa.SVGAsset = (function($, undefined) {
 			return $sprite;
 		};
 
+		this.getOption = function(key) {
+			return options[key];
+		};
+
 		this.init();
 	};
 
-	return SVGAsset;
-})(jQuery);
+})(window.$sa, window.jQuery);

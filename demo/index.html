@@ -26,8 +26,9 @@
 
 		<script>
 			$().ready(function() {
-
-				$sa.SVGLoader
+				$sa.SVGLoader({
+					cache: false
+				})
 					.load({
 						url: 'assets/package.svg'
 					})
@@ -37,7 +38,7 @@
 						$('#logo').append($logo);
 					});
 
-				$sa.SVGLoader
+				$sa.SVGLoader()
 					.load({
 						url: 'assets/package-icons.svg'
 					})

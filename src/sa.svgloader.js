@@ -1,15 +1,21 @@
-$sa.SVGLoader = (function($, undefined) {
-	var _name = 'svgloader',
-		_instance,
+(function($sa, $) {
+	var _instance;
 
-	SVGLoader = function(options_) {
+	$sa.SVGLoader = function(options_) {
+
+		if (_instance) {
+			return _instance;
+		}
+		if (!(this instanceof $sa.SVGLoader)) {
+			return _instance = new $sa.SVGLoader(options_);
+		}
+
 		var
 			_this = this,
 
 			options = {
 				cache: true
 			},
-			core = {},
 			assets = {};
 
 		this.init = function() {
@@ -23,7 +29,6 @@ $sa.SVGLoader = (function($, undefined) {
 					name: null,
 					cache: options.cache
 				}, opt_),
-
 				name = opt.name;
 
 			if (!name) {
@@ -53,12 +58,11 @@ $sa.SVGLoader = (function($, undefined) {
 			return this.getAsset(asset).get(id, cls);
 		};
 
+		this.getOption = function(key) {
+			return options[key];
+		};
+
 		this.init();
 	};
 
-	if (!_instance) {
-		_instance = new SVGLoader();
-	}
-	return _instance;
-
-})(jQuery);
+})(window.$sa, window.jQuery);

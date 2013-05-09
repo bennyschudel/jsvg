@@ -1,3 +1,3 @@
-if (!window.$sa) {
+if (!('$sa' in window)) {
 	window.$sa = {};
 }
