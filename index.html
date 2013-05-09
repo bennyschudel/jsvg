@@ -33,14 +33,12 @@
 
 <em>$().ready(function() {</em>
 
-    $sa.SVGLoader
+    $sa.SVGLoader()
         .load({
             url: 'package.svg'
         })
         .done(function() {
-            var $icon = this.asset.get('#icon-settings', 'icon');
-
-            $('#icon').append($icon);
+            $('#icon').append( this.asset.get('#icon-settings', 'icon') );
         });
 
 <em>});</em>
@@ -49,10 +47,10 @@
 </pre>
 		</section>
 		<section class="note">
-			<a href="https://github.com/bennyschudel/jsvg/archive/0.5.6.zip"><button class="button">Download 0.5.6</button></a>
+			<a href="https://github.com/bennyschudel/jsvg/archive/0.5.7.zip"><button class="button">Download 0.5.7</button></a>
 			<a href="https://github.com/bennyschudel/jsvg/"><button class="button">GitHub</button></a><br>
 			<div id="torch"></div>
-			<p>Thanks for stopping by. If you like you can drop <a href="http://twitter.com/bennyschudel" target="_blank">me</a> a line or two.<br>BTW there's a <a href="http://www.github.com/bennyschudel/jsvg" target="_blank">README</a> on GitHub ;)</p>
+			<p>Thanks for stopping by. If you like you can drop <a href="http://twitter.com/bennyschudel" target="_blank">me</a> a line or two.<br>BTW there's an additional <a href="http://www.github.com/bennyschudel/jsvg" target="_blank">README</a> on GitHub ;)</p>
 		</section>
 
 		<footer>
@@ -62,25 +60,20 @@
 		<script src="js/jquery-1.7.1.min.js"></script>
 		<script src="js/prefixfree.min.js"></script>
 
-		<script src="js/jsvg-0.5.6.js"></script>
+		<script src="js/jsvg-0.5.7.js"></script>
 
 		<script>
 			$().ready(function() {
 
-				 $sa.SVGLoader
+				 $sa.SVGLoader()
 					.load({
 						url: 'package.svg'
 					})
 					.done(function() {
-						var $logo = this.asset.get('#logo'),
-							$icon = this.asset.get('#icon-settings', 'icon'),
-							$fork_me = this.asset.get('#fork-me'),
-							$torch = this.asset.get('#torch');
-
-						$('header').prepend($logo);
-						$('#icon').append($icon);
-						$('#fork-me > a').append($fork_me);
-						$('#torch').append($torch);
+						$('header').prepend( this.asset.get('#logo') );
+						$('#icon').append( this.asset.get('#icon-settings', 'icon') );
+						$('#fork-me > a').append( this.asset.get('#fork-me') );
+						$('#torch').append( this.asset.get('#torch') );
 					});
 
 			});
