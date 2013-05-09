@@ -110,19 +110,19 @@ button.button:active {
 	right: 1.5em;
 }
 
-.fork-me {
+.svg-fork-me {
 	width: 8em;
 	height: 8em;
 
 	transition: all 0.3s ease-out;
 }
-.fork-me:hover {
+.svg-fork-me:hover {
 	width: 10em;
 	height: 10em;
 
 	transform: rotate(15deg);
 }
-.fork-me:hover path {
+.svg-fork-me:hover path {
 	fill: #49cff5;
 }
 
