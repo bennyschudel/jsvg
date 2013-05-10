@@ -19,7 +19,7 @@
 			},
 			assets = {};
 
-		this.VERSION = '0.5.7';
+		this.VERSION = '0.5.8';
 
 		this.init = function() {
 			$.extend(true, options, options_);
