@@ -10,12 +10,15 @@ body {
 svg {
 	display: block;
 }
-svg > defs {
-	display: none;
-}
-
 h1, h2 {
 	border-bottom: 1px solid black;
+}
+
+.jsvg-assets {
+	overflow: hidden;
+	width: 0;
+	height: 0;
+	position: absolute;
 }
 
 .column {

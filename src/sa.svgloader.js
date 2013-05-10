@@ -14,8 +14,8 @@
 			_this = this,
 
 			options = {
-				cache        : true,
-				appendToBody : true
+				cache       : true,
+				appendToDOM : true
 			},
 			assets = {};
 
@@ -29,7 +29,7 @@
 			var
 				opt = $.extend({
 					cache        : options.cache,
-					appendToBody : options.appendToBody
+					appendToDOM : options.appendToDOM
 				}, opt_),
 				name = opt.name;
 
@@ -54,8 +54,8 @@
 			return assets[name];
 		};
 
-		this.getSprite = function(asset, id, cls) {
-			return this.getAsset(asset).get(id, cls);
+		this.getSprite = function(asset, id, opt) {
+			return this.getAsset(asset).get(id, opt);
 		};
 
 		this.getAssets = function() {

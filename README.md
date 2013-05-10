@@ -18,7 +18,7 @@ $sa.SVGLoader()
         url: 'package.svg'
     })
     .done(function() {
-        $('body').append( this.asset.get('your-layer-name', 'optional-class') );
+        $('body').append( this.asset.get('your-layer-name', { className: 'your-class-name' }) );
     });
 
 ```

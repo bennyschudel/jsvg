@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="screen.css">
 	</head>
 	<body>
+
 		<div class="column">
 			<header>
 				<h2>Direct injection</h2>
@@ -49,9 +50,7 @@
 					</svg><span>Settings</span>
 				</button>
 			</div>
-
 		</div>
-
 
 
 		<script src="js/jquery.min.js"></script>
@@ -62,13 +61,14 @@
 
 		<script>
 			$().ready(function() {
+
 				$sa.SVGLoader()
 					.load({
 						url: 'assets/package.svg'
 					})
 					.done(function() {
-						$('#logo').append( this.asset.get('#svg-logo', 'logo') );
-						$('#torch').append( this.asset.get('#svg-torch', 'torch') );
+						$('#logo').append( this.asset.get('#svg-logo', { className: 'logo' }) );
+						$('#torch').append( this.asset.get('#svg-torch', { className: 'torch', unify: true }) );
 					});
 
 				$sa.SVGLoader()
@@ -76,8 +76,8 @@
 						url: 'assets/package-icons.svg'
 					})
 					.done(function() {
-						$('#alert').prepend( this.asset.get('#svg-icon-alert', 'icon') );
-						$('#settings').prepend( this.asset.get('#svg-icon-settings', 'icon') );
+						$('#alert').prepend( this.asset.get('#svg-icon-alert', { className: 'icon' }) );
+						$('#settings').prepend( this.asset.get('#svg-icon-settings', { className: 'icon' }) );
 					});
 
 			});
