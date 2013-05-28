@@ -64,11 +64,11 @@
 
 				$sa.SVGLoader()
 					.load({
-						url: 'assets/package.svg'
+						url: 'assets/package.svg',
 					})
 					.done(function() {
-						$('#logo').append( this.asset.get('#svg-logo', { className: 'logo' }) );
-						$('#torch').append( this.asset.get('#svg-torch', { className: 'torch', unify: true }) );
+						$('#logo').append( this.asset.get('#svg-logo') );
+						$('#torch').append( this.asset.get('#svg-torch') );
 					});
 
 				$sa.SVGLoader()

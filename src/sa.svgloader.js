@@ -14,12 +14,17 @@
 			_this = this,
 
 			options = {
-				cache       : true,
-				appendToDOM : true
+				asset : {
+					url              : '',
+					name             : '',
+					cache            : true,
+					appendToDom      : true,
+					copyIdsToClasses : true
+				}
 			},
 			assets = {};
 
-		this.VERSION = '0.5.8';
+		this.VERSION = '0.5.9';
 
 		this.init = function() {
 			$.extend(true, options, options_);
@@ -27,10 +32,7 @@
 
 		this.load = function(opt_) {
 			var
-				opt = $.extend({
-					cache        : options.cache,
-					appendToDOM : options.appendToDOM
-				}, opt_),
+				opt = $.extend(options.asset, opt_),
 				name = opt.name;
 
 			if (!name) {

@@ -11,7 +11,7 @@
 			return str.replace(RE_TRIM, '');
 		},
 		_makeId = function(len, charset) {
-			if (!len) { len = 6; }
+			if (!len)     { len     = 6; }
 			if (!charset) { charset = "abcdefghijklmnopqrstuvwxyz"; }
 
 			var
@@ -30,11 +30,12 @@
 			_this = this,
 
 			options = {
-				url         : '',
-				index       : '',
-				cache       : true,
-				className   : null,
-				appendToDOM : true
+				url              : '',
+				name             : '',
+				cache            : true,
+				unify            : true,
+				appendToDom      : true,
+				copyIdsToClasses : true
 			},
 			core = {
 				data      : null,
@@ -50,9 +51,9 @@
 				suffix : ''
 			},
 
-			unifyIds, getNodeText;
+			alterId, unifyIds, getNodeText;
 
-		this.VERSION = '0.5.8';
+		this.VERSION = '0.5.9';
 
 		this.init = function() {
 			$.extend(true, options, options_);
@@ -84,7 +85,7 @@
 						ids.push(item.id);
 					});
 
-					if (options.appendToDOM) {
+					if (options.appendToDom) {
 						if (!$assets.length) {
 							$assets = $('<div>', { id: 'jsvg-assets', 'class': 'jsvg-assets' });
 							$('body').append($assets);
@@ -104,51 +105,56 @@
 
 			var
 				opt = $.extend(true, {
-					className: '',
-					unify: true
+					className : '',
+					unify     : options.unify
 				}, opt_),
-				className = _trim(_clean([id, options.className, opt.className].join(' '))),
-				$sprite   = cache.sprites[id],
+
+				$sprite = cache.sprites[id],
+
 				$svg, $item, $body;
 
-			// sprite is cached
+
 			if (!$sprite) {
-				// find element
 				$item = cache.$svg.find('#'+id);
 				if (!$item[0]) {
 					throw new Error("Could not find svg element #"+id);
 				}
 
-				// is svg element
 				if ($item.is('svg')) {
 					$sprite = $item.clone();
 				}
 				else {
-					$svg = $item.closest('svg');
+					$svg    = $item.closest('svg');
 					$sprite = $svg.clone().empty();
-					$body = $item.clone();
+					$body   = $item.clone();
 
 					$body
 						.removeAttr('id')
 						.attr('display', 'inherit');
+
+					$sprite.append($body);
 				}
 
 				$sprite.removeAttr('id');
 
-				if ($body) {
-					$sprite.append($body);
-				}
-
-				// store to cache
 				cache.sprites[id] = $sprite.clone();
 			}
 
 			if (opt.unify) {
 				$sprite = unifyIds($sprite, opt.unify);
+				// set unified id
+				$sprite[0].id = alterId(id, unifyOptions);
 			}
 
 			$sprite = $sprite.clone();
-			$sprite.attr('class', className);
+
+			// custom class
+			if (opt.className) {
+				$sprite[0].classList.add(opt.className);
+			}
+
+			// copy id to class
+			$sprite[0].classList.add(id);
 
 			return $sprite;
 		};
@@ -167,31 +173,47 @@
 
 		/* --- private --- */
 
+		alterId = function(id, opt_) {
+			var
+				opt = $.extend({
+					'prefix': '',
+					'suffix': ''
+				}, opt_);
+
+			return String(opt.prefix+id+opt.suffix);
+		};
+
 		unifyIds = function($sprite, opt_) {
 			var
 				opt = $.extend({
 					'prefix': '',
 					'suffix': '-'+_makeId(3)
 				}, opt_),
+
 				re_is_sequence = /.+[0-9]$/,
-				is_sequence = function(str) {
+				is_sequence    = function(str) {
 					return re_is_sequence.test(str);
 				},
-				sprite = getNodeText($sprite[0]),
-				ids = [];
+				ids = [],
+
+				sprite;
+
 
 			$sprite.find('[id]').each(function(index, item) {
-				if (!is_sequence(item.id)) { return; }
-
+				if (options.copyIdsToClasses) {
+					item.classList.add(item.id);
+				}
 				ids.push(item.id);
 			});
+
+			sprite = getNodeText($sprite[0]);
 
 			ids.forEach(function(id) {
 				var
 					str = '(#|id=")('+id+')("|\\W)',
 					re = new RegExp(str, 'g');
 
-				sprite = sprite.replace(re, '$1'+opt.prefix+id+opt.suffix+'$3');
+				sprite = sprite.replace(re, '$1'+alterId(id, opt)+'$3');
 			});
 
 			$sprite = $(sprite);

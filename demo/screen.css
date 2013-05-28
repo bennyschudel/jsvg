@@ -66,6 +66,16 @@ h1, h2 {
 	fill: #CCC;
 }
 
-.logo:hover {
+#svg-logo {
+	fill: #186B8F;
+}
+#svg-logo-wheel {
+	fill: #49CFF5;
+}
+
+.svg-logo {
+	fill: #186B8F;
+}
+.svg-logo-wheel {
 	fill: #49CFF5;
 }
