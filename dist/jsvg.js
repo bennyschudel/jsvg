@@ -27,7 +27,7 @@ if (!('$sa' in window)) {
 			},
 			assets = {};
 
-		this.VERSION = '0.5.9';
+		this.VERSION = '0.6.0';
 
 		this.init = function() {
 			$.extend(true, options, options_);
@@ -128,9 +128,9 @@ if (!('$sa' in window)) {
 				suffix : ''
 			},
 
-			alterId, unifyIds, getNodeText;
+			addClass, alterId, unifyIds, getNodeText;
 
-		this.VERSION = '0.5.9';
+		this.VERSION = '0.6.0';
 
 		this.init = function() {
 			$.extend(true, options, options_);
@@ -227,11 +227,11 @@ if (!('$sa' in window)) {
 
 			// custom class
 			if (opt.className) {
-				$sprite[0].classList.add(opt.className);
+				addClass($sprite[0], opt.className);
 			}
 
 			// copy id to class
-			$sprite[0].classList.add(id);
+			addClass($sprite[0], id);
 
 			return $sprite;
 		};
@@ -249,6 +249,12 @@ if (!('$sa' in window)) {
 		};
 
 		/* --- private --- */
+
+		addClass = function(el, cls) {
+			var current = el.className.baseVal;
+
+			return el.className.baseVal = _trim(current+' '+cls);
+		};
 
 		alterId = function(id, opt_) {
 			var
@@ -278,7 +284,7 @@ if (!('$sa' in window)) {
 
 			$sprite.find('[id]').each(function(index, item) {
 				if (options.copyIdsToClasses) {
-					item.classList.add(item.id);
+					addClass(item, item.id);
 				}
 				ids.push(item.id);
 			});

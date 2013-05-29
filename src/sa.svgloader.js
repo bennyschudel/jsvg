@@ -24,7 +24,7 @@
 			},
 			assets = {};
 
-		this.VERSION = '0.5.9';
+		this.VERSION = '0.6.0';
 
 		this.init = function() {
 			$.extend(true, options, options_);
