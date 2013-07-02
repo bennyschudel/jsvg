@@ -130,7 +130,7 @@ if (!('$sa' in window)) {
 
 			addClass, alterId, unifyIds, getNodeText;
 
-		this.VERSION = '0.6.0';
+		this.VERSION = '0.6.1';
 
 		this.init = function() {
 			$.extend(true, options, options_);
@@ -293,7 +293,7 @@ if (!('$sa' in window)) {
 
 			ids.forEach(function(id) {
 				var
-					str = '(#|id=")('+id+')("|\\W)',
+					str = '(#|id=")('+id+')(")',
 					re = new RegExp(str, 'g');
 
 				sprite = sprite.replace(re, '$1'+alterId(id, opt)+'$3');
