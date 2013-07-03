@@ -27,7 +27,7 @@ if (!('$sa' in window)) {
 			},
 			assets = {};
 
-		this.VERSION = '0.6.1';
+		this.VERSION = '0.6.2';
 
 		this.init = function() {
 			$.extend(true, options, options_);
@@ -130,7 +130,7 @@ if (!('$sa' in window)) {
 
 			addClass, alterId, unifyIds, getNodeText;
 
-		this.VERSION = '0.6.1';
+		this.VERSION = '0.6.2';
 
 		this.init = function() {
 			$.extend(true, options, options_);
@@ -183,25 +183,47 @@ if (!('$sa' in window)) {
 			var
 				opt = $.extend(true, {
 					className : '',
-					unify     : options.unify
+					unify     : options.unify,
+					useTag    : false
 				}, opt_),
 
 				$sprite = cache.sprites[id],
 
+				findItem = function() {
+					var
+						$item = cache.$svg.find('#'+id);
+
+					if (!$item[0]) {
+						throw new Error("Could not find svg element #"+id);
+					}
+
+					return $item;
+				},
+				findSvgNode = function($item) {
+					if ($item.is('svg')) { return $item; }
+
+					return $item.closest('svg');
+				},
+
 				$svg, $item, $body;
 
+			if (opt.useTag) {
+				$item = findItem();
+				$svg = findSvgNode($item);
 
+				$sprite = $svg.clone().empty();
+
+				$sprite
+					.removeAttr('id')
+					.append('<use xlink:href="#'+id+'">');
+			} else
 			if (!$sprite) {
-				$item = cache.$svg.find('#'+id);
-				if (!$item[0]) {
-					throw new Error("Could not find svg element #"+id);
-				}
-
+				$item = findItem();
 				if ($item.is('svg')) {
 					$sprite = $item.clone();
 				}
 				else {
-					$svg    = $item.closest('svg');
+					$svg    = findSvgNode($item);
 					$sprite = $svg.clone().empty();
 					$body   = $item.clone();
 

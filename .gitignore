@@ -2,3 +2,4 @@
 .htaccess
 _*
 components
+.tern-port

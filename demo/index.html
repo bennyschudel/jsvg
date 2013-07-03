@@ -20,6 +20,8 @@
 
 			<div id="torch" style="width: 86px; height: 270px;"></div>
 
+			<div id="torch-use" style="width: 86px; height: 270px;"></div>
+
 			<div id="icons">
 				<button id="alert" class="button"><span>Alert</span></button>
 				<button id="settings" class="button"><span>Settings</span></button>
@@ -67,6 +69,7 @@
 					.done(function() {
 						$('#logo').append( this.asset.get('#svg-logo') );
 						$('#torch').append( this.asset.get('#svg-torch') );
+						$('#torch-use').append( this.asset.get('#svg-torch', { useTag: true }) );
 					});
 
 				$sa.SVGLoader()
